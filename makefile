@@ -2,33 +2,29 @@
 
 # Compiler and flags
 CXX := g++
-CXXFLAGS := -std=c++17 -Iinclude -Wall -Wextra -O2 -g
+CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -g -Iinclude -Ideps/sdl2/include/SDL2
+LDFLAGS  := -Ldeps/sdl2/lib -lSDL2
 
-# Directories
 SRC_DIR := src
 BIN_DIR := bin
-INC_DIR := include
+OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BIN_DIR)/%.o,$(wildcard $(SRC_DIR)/*.cpp))
+TARGET := bin/app
 
 # Files
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
-OBJS := $(patsubst $(SRC_DIR)/%.cpp,$(BIN_DIR)/%.o,$(SRCS))
+CXXFLAGS := -std=c++17 -Wall -Wextra -O2 -g -Iinclude -Ideps/sdl2/include
+LDFLAGS  := -Ldeps/sdl2/lib -lSDL2
 TARGET := main
 
 # ------- Targets --------
 
 all: $(TARGET)
 
-headers: *.cpp tags
-	./headers.sh
-
-tags: *.cpp
-	ctags -R .
 
 # ------------------------
 
 # Link object files into final executable
-$(TARGET): $(OBJS)
-	$(CXX) $(CXXFLAGS) -o $@ $^
+$(TARGET): $(OBJS) 
+	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
 
 # Compile source files into object files
 $(BIN_DIR)/%.o: $(SRC_DIR)/%.cpp | $(BIN_DIR)

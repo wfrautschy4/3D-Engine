@@ -1,6 +1,14 @@
 #include "mat4x4.h"
 
+
 // Constructor
+mat4x4::mat4x4(){
+        m[0][0] = 0; m[0][1] = 0; m[0][2] = 0; m[0][3] = 0;
+        m[1][0] = 0; m[1][1] = 0; m[1][2] = 0; m[1][3] = 0;
+        m[2][0] = 0; m[2][1] = 0; m[2][2] = 0; m[2][3] = 0;
+        m[3][0] = 0; m[3][1] = 0; m[3][2] = 0; m[3][3] = 0;
+    }
+
 mat4x4::mat4x4(float m11, float m12, float m13, float m14,
         float m21, float m22, float m23, float m24,
         float m31, float m32, float m33, float m34,
@@ -82,7 +90,6 @@ const mat4x4 mat4x4::operator/(float scalar) {
 
 
 // Matrix Operations
-
 mat4x4 mat4x4::transpose() const {
     mat4x4 mat{};
     for(int r = 0; r < 4; r++){
